@@ -1,26 +1,42 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import dashboard from "./dashboard.js";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+  useParams
+} from "react-router-dom";
 
-function App() {
+export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleDayClick = this.handleDayClick.bind(this);
+    this.state = {
+      selectedDay: undefined,
+    };
+  }
+
+  handleDayClick(day) {
+    this.setState({ selectedDay: day });
+  }
+
+  render() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router>
+      <div>
+        <Link to="/calendar">Calendar</Link>
+        <Switch>
+          <Route path="/calendar" component={dashboard}>
+          </Route>
+        </Switch>
+      </div>
+    </Router>
+  )
+}
 }
 
-export default App;
+function Calendar() {
+  return <h2>Calendar</h2>;
+}
